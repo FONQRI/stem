@@ -1,35 +1,18 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(MongodbOdl)
+project(database)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-include_directories(
-  ./ario_server_libs
-  ./ontrollers
-  )
 
-
-
-
-# Make sure our local CMake Modules path comes first
-list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake/Modules)
-
-##seting file pathes
-file(GLOB Headers ./*.hpp ./*.h )
-file(GLOB Cpps ./*.cpp ./*.qmodel ./*.md)
-
-
-file(GLOB ControllersHeaders ./controllers/*.hpp  )
-file(GLOB ControllersCpps ./*.cpp ./*.qmodel ./*.md)
+file(GLOB ControllersHeaders ./*.hpp ./*.h)
+file(GLOB ControllersCpps ./*.cpp)
 
 
 set (CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++17 -D__STRICT_ANSI__")
 
 find_package (Threads REQUIRED)
-find_package (inja REQUIRED)
-
 
 # adding mongo client library
 find_package(libbsoncxx REQUIRED)
@@ -49,20 +32,14 @@ find_package(Boost 1.70 REQUIRED COMPONENTS
 
 
 if(Boost_FOUND)
-
-  add_subdirectory(ario_server_libs)
-  add_subdirectory(controllers)
-  add_subdirectory(database)
-
   include_directories(${Boost_INCLUDE_DIRS})
-  add_executable(${PROJECT_NAME} "main.cpp" ${Headers} ${Cpps} ${ControllersHeaders} ${ControllersCpps} )
+  add_library(${PROJECT_NAME} ${ControllersHeaders} ${ControllersCpps} )
   target_link_libraries(${PROJECT_NAME}
     Boost::date_time
     Boost::system
     Boost::filesystem
     Boost::iostreams
     Boost::thread
-    #    Boost::mpi
     ${CMAKE_THREAD_LIBS_INIT}
     ${Boost_SYSTEM_LIBRARY}
     ${MPI_CXX_LIBRARIES}
@@ -84,8 +61,3 @@ if(Boost_FOUND)
 
 endif(Boost_FOUND)
 
-set(Boost_USE_STATIC_LIBS        ON) # only find static libs
-set(Boost_USE_MULTITHREADED      ON)
-set(Boost_USE_STATIC_RUNTIME OFF)
-add_definitions(-DBOOST_ERROR_CODE_HEADER_ONLY)
-FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources DESTINATION ${CMAKE_BINARY_DIR})

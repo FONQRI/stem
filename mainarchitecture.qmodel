@@ -246,7 +246,7 @@
                          </base-DElement>
                          <object>{603dbd4b-2fff-46ea-b789-457b0606cc73}</object>
                          <name>MongodbDatabaseManager</name>
-                         <pos>x:755;y:345</pos>
+                         <pos>x:800;y:345</pos>
                          <rect>x:-75;y:-30;w:150;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -299,7 +299,7 @@
                     </item>
                    </qlist>
                   </elements>
-                  <last-modified>1571881297346</last-modified>
+                  <last-modified>1574704763255</last-modified>
                   <toolbarid>General</toolbarid>
                  </MDiagram>
                 </base-MDiagram>

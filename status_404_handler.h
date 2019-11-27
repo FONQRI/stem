@@ -29,7 +29,6 @@ int status_404_service_handler(h2o_handler_t *self, h2o_req_t *req)
 
 	return 0;
 }
-}
-
+} // namespace ario
 
 #endif // STATUS_404_HANDLER_H

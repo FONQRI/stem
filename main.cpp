@@ -1,11 +1,28 @@
 #include "ario_server.hpp"
 #include <filesystem>
 
-#include "controllers/login_controller.hpp"
 #include "home_service_handler.hpp"
 #include "template_file_handler.hpp"
 
 #include <inja/parser.hpp>
+#include <nlohmann/json.hpp>
+/* TODO : list
+ * [ ] doument all steps in md files in doc folder
+ * [ ] use correct library adding in cmake for project
+ * [x] Select a good datamodel
+ * [x] select a good library for it
+ * [ ] rewite controllers to become sprate from server part(using datamodel for interface)
+ * [ ] write h2o handlers for controllers
+ * [ ] find good way for auth prodects and database and statices
+ * [ ]
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
 
 int main(int argc, char **argv)
 {
@@ -30,7 +47,6 @@ int main(int argc, char **argv)
 	//	h2o_file_register(h2o_config_register_path(hostconf, "/favicon.ico", 0),
 	//					  "resources/doc_root/favicon.ico", NULL, NULL, 0);
 
-	register_handler(hostconf, "/login", ario::login_controller);
 	register_handler(hostconf, "/404", ario::status_404_service_handler);
 	register_handler(hostconf, "/", ario::home_service_handler);
 #if H2O_USE_LIBUV
