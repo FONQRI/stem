@@ -6,10 +6,10 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 include_directories(
   ./ario_server_libs
-  ./ontrollers
+  ./controllers
+  ./database
+  ./ario_server_libs/include
   )
-
-
 
 
 # Make sure our local CMake Modules path comes first
@@ -51,8 +51,8 @@ find_package(Boost 1.70 REQUIRED COMPONENTS
 if(Boost_FOUND)
 
   add_subdirectory(ario_server_libs)
-  add_subdirectory(controllers)
   add_subdirectory(database)
+  add_subdirectory(controllers)
 
   include_directories(${Boost_INCLUDE_DIRS})
   add_executable(${PROJECT_NAME} "main.cpp" ${Headers} ${Cpps} ${ControllersHeaders} ${ControllersCpps} )

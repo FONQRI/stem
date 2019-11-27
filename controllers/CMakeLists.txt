@@ -57,6 +57,7 @@ if(Boost_FOUND)
     z
     # stl filesystem
     stdc++fs
+    database
     )
 
 endif(Boost_FOUND)

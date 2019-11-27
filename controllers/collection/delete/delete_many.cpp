@@ -2,9 +2,8 @@
 #include "delete_many.h"
 
 // internal
-#include "lib/reply.h"
-#include "src/database/collection_methods.h"
-#include "src/database/security/password.h"
+#include "collection_methods.h"
+#include "reply.h"
 
 // mongocxx
 #include <mongocxx/exception/exception.hpp>
@@ -12,26 +11,19 @@
 // boost
 #include <boost/optional.hpp>
 
+// json
+#include <nlohmann/json.hpp>
+
 // std
 #include <iostream>
 #include <string>
 #include <vector>
 
-std::string iotdb::controller::delete_many(std::string input)
+std::string iotdb::controller::delete_many(std::string database_name, std::string collection_name,
+										   std::string query_str)
 {
-
-	// get database name and check client_key access
-	std::string database_name{};
-	std::string check_key_reply;
-	if (!iotdb::database::security::password::check_key(username, client_key, check_key_reply)) {
-		rep.content.append(check_key_reply.c_str(), check_key_reply.size());
-		return;
-	} else {
-		database_name = check_key_reply;
-	}
-
 	// convert content to json
-	bsoncxx::document::value request_document = bsoncxx::from_json(request.content);
+	bsoncxx::document::value request_document = bsoncxx::from_json(query_str);
 
 	// get query document of request
 	bsoncxx::types::b_document query;
@@ -42,16 +34,15 @@ std::string iotdb::controller::delete_many(std::string input)
 
 		// if element doesn't exist in request document
 		if (strcmp(e.what(), "unset document::element") == 0) {
-			std::string reply = core::reply::missing_item_error("query");
-			rep.content.append(reply.c_str(), reply.size());
+			return core::reply::missing_item_error("query");
+
 		} // check if element type is wrong
 		else if (strcmp(e.what(), "expected element "
 								  "type k_document")
 				 == 0) {
-			std::string reply = core::reply::wrong_item_type("query");
-			rep.content.append(reply.c_str(), reply.size());
+			return core::reply::wrong_item_type("query");
 		}
-		return;
+		return core::reply::unknown_error();
 	}
 
 	// get collation of request
@@ -67,9 +58,7 @@ std::string iotdb::controller::delete_many(std::string input)
 		if (strcmp(e.what(), "expected element "
 							 "type k_document")
 			== 0) {
-			std::string reply = core::reply::wrong_item_type("collation");
-			rep.content.append(reply.c_str(), reply.size());
-			return;
+			return core::reply::wrong_item_type("collation");
 		}
 	}
 
@@ -86,9 +75,7 @@ std::string iotdb::controller::delete_many(std::string input)
 		if (strcmp(e.what(), "expected element "
 							 "type k_document")
 			== 0) {
-			std::string reply = core::reply::wrong_item_type("write_concern");
-			rep.content.append(reply.c_str(), reply.size());
-			return;
+			return core::reply::wrong_item_type("write_concern");
 		}
 	}
 
@@ -122,9 +109,7 @@ std::string iotdb::controller::delete_many(std::string input)
 			if (strcmp(e.what(), "expected element "
 								 "type k_document")
 				== 0) {
-				std::string reply = core::reply::wrong_item_type("acknowledge_level");
-				rep.content.append(reply.c_str(), reply.size());
-				return;
+				return core::reply::wrong_item_type("acknowledge_level");
 			}
 		}
 
@@ -138,9 +123,7 @@ std::string iotdb::controller::delete_many(std::string input)
 			if (strcmp(e.what(), "expected element "
 								 "type k_document")
 				== 0) {
-				std::string reply = core::reply::wrong_item_type("tag");
-				rep.content.append(reply.c_str(), reply.size());
-				return;
+				return core::reply::wrong_item_type("tag");
 			}
 		}
 
@@ -154,9 +137,7 @@ std::string iotdb::controller::delete_many(std::string input)
 			if (strcmp(e.what(), "expected element "
 								 "type k_document")
 				== 0) {
-				std::string reply = core::reply::wrong_item_type("journal");
-				rep.content.append(reply.c_str(), reply.size());
-				return;
+				return core::reply::wrong_item_type("journal");
 			}
 		}
 
@@ -170,9 +151,7 @@ std::string iotdb::controller::delete_many(std::string input)
 			if (strcmp(e.what(), "expected element "
 								 "type k_document")
 				== 0) {
-				std::string reply = core::reply::wrong_item_type("majority");
-				rep.content.append(reply.c_str(), reply.size());
-				return;
+				return core::reply::wrong_item_type("majority");
 			}
 		}
 
@@ -186,9 +165,7 @@ std::string iotdb::controller::delete_many(std::string input)
 			if (strcmp(e.what(), "expected element "
 								 "type k_document")
 				== 0) {
-				std::string reply = core::reply::wrong_item_type("timeout");
-				rep.content.append(reply.c_str(), reply.size());
-				return;
+				return core::reply::wrong_item_type("timeout");
 			}
 		}
 
@@ -202,18 +179,12 @@ std::string iotdb::controller::delete_many(std::string input)
 			if (strcmp(e.what(), "expected element "
 								 "type k_document")
 				== 0) {
-				std::string reply = core::reply::wrong_item_type("nodes");
-				rep.content.append(reply.c_str(), reply.size());
-				return;
+				return core::reply::wrong_item_type("nodes");
 			}
 		}
 	}
 
 	// get reply from database
-	auto reply = iotdb::database::delete_many(username, database_name, query, collation,
-											  acknowledge_level, tag, journal, majority, timeout,
-											  nodes);
-
-	// write reply
-	rep.content.append(reply.c_str(), reply.size());
+	return iotdb::database::delete_many(database_name, collection_name, query, collation,
+										acknowledge_level, tag, journal, majority, timeout, nodes);
 }

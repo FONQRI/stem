@@ -58,6 +58,9 @@ if(Boost_FOUND)
     # stl filesystem
     stdc++fs
     )
+#  target_include_directories(${PROJECT_NAME}
+#/
+#    )
 
 endif(Boost_FOUND)
 
