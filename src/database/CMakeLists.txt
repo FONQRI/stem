@@ -1,10 +1,12 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(ario_server_libs)
+project(database)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 
-file(GLOB Headers ./include/*.hpp ./include/*.h)
-file(GLOB Cpps ./lib/*.cpp)
+file(GLOB ControllersHeaders ./*.hpp ./*.h)
+file(GLOB ControllersCpps ./*.cpp)
 
 
 set (CMAKE_CXX_STANDARD 17)
@@ -15,18 +17,31 @@ find_package (Threads REQUIRED)
 # adding mongo client library
 find_package(libbsoncxx REQUIRED)
 find_package(libmongocxx REQUIRED)
-include_directories(${LIBBSONCXX_INCLUDE_DIRS} ${LIBMONGOCXX_INCLUDE_DIRS} )
 
-if(Boost_FOUND)
+include_directories(${LIBBSONCXX_INCLUDE_DIRS} ${LIBMONGOCXX_INCLUDE_DIRS} ${ario_server_libs_INCLUDE_DIR})
 
 
+find_package(Boost 1.70 REQUIRED COMPONENTS
+  date_time
+  system
+  filesystem
+  iostreams
+  iostreams
+  thread
+  serialization
+  )
+
+
+if(NOT Boost_FOUND)
+  message(FATAL "Boost Not Found")
+endif()
   include_directories(${Boost_INCLUDE_DIRS})
-  add_library(${PROJECT_NAME} ${Cpps} )
+  add_library(${PROJECT_NAME} ${ControllersHeaders} ${ControllersCpps} )
+  add_library(fonqri::database ALIAS ${PROJECT_NAME})
 
   target_include_directories(${PROJECT_NAME}
     PUBLIC
-    ${PROJECT_SOURCE_DIR}/include
-
+    ${PROJECT_SOURCE_DIR}
     )
   target_link_libraries(${PROJECT_NAME}
     Boost::date_time
@@ -51,7 +66,11 @@ if(Boost_FOUND)
     z
     # stl filesystem
     stdc++fs
-    )
 
-endif(Boost_FOUND)
+    ario_server_libs
+    )
+#  target_include_directories(${PROJECT_NAME}
+#/
+#    )
+
 

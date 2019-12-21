@@ -8,7 +8,7 @@
 #include <sstream>
 #include <vector>
 
-#include "core/reply.h"
+#include "reply.h"
 
 // mongocxx
 #include <bsoncxx/builder/basic/array.hpp>
@@ -34,12 +34,11 @@ using bsoncxx::builder::basic::sub_array;
  * was
  * successful or not
  */
-std::string iotdb::database::create_user(std::string username,
-					 std::string password,
-					 std::string primary_phone_number,
-					 std::string primary_email,
-					 optional_string_array phone_numbers,
-					 optional_string_array emails)
+std::string iotdb::database::create_user(std::string username, std::string password,
+										 std::string primary_phone_number,
+										 std::string primary_email,
+										 optional_string_array phone_numbers,
+										 optional_string_array emails)
 {
 	// reply message
 	std::string reply;
@@ -54,38 +53,27 @@ std::string iotdb::database::create_user(std::string username,
 	auto collection = database["users"];
 
 	// check if user dose not exist
-	try
-	{
+	try {
 		bsoncxx::builder::basic::document user_document{};
 		// create new user
 		user_document.append(kvp("username", username));
 		user_document.append(kvp("password", password));
-		user_document.append(
-		kvp("primary_phone_number", primary_phone_number));
+		user_document.append(kvp("primary_phone_number", primary_phone_number));
 		user_document.append(kvp("primary_email", primary_email));
 
-		if (phone_numbers.is_initialized())
-		{
-			user_document.append(
-			kvp("phone_numbers", [phone_numbers](sub_array child) {
-				for (size_t i = 0; i < phone_numbers.get().size();
-				 i++)
-				{
-					bsoncxx::stdx::string_view d =
-					phone_numbers.get().at(i);
+		if (phone_numbers.is_initialized()) {
+			user_document.append(kvp("phone_numbers", [phone_numbers](sub_array child) {
+				for (size_t i = 0; i < phone_numbers.get().size(); i++) {
+					bsoncxx::stdx::string_view d = phone_numbers.get().at(i);
 					child.append(d);
 				}
 			}));
 		}
 
-		if (emails.is_initialized())
-		{
-			user_document.append(
-			kvp("emails", [emails](sub_array child) {
-				for (size_t i = 0; i < emails.get().size(); i++)
-				{
-					bsoncxx::stdx::string_view d =
-					emails.get().at(i);
+		if (emails.is_initialized()) {
+			user_document.append(kvp("emails", [emails](sub_array child) {
+				for (size_t i = 0; i < emails.get().size(); i++) {
+					bsoncxx::stdx::string_view d = emails.get().at(i);
 					child.append(d);
 				}
 			}));
@@ -107,9 +95,7 @@ std::string iotdb::database::create_user(std::string username,
 		collection.insert_one(user_document.view());
 		// return seccess message
 		return core::reply::answer_done();
-	}
-	catch (const mongocxx::exception &e)
-	{
+	} catch (const mongocxx::exception &e) {
 		// create json from error
 		return core::reply::user_creation_failed(e.what());
 	}
@@ -124,8 +110,7 @@ std::string iotdb::database::create_user(std::string username,
  * @return			: user in json if there is such user and failed
  * json if there is no such user
  */
-std::string iotdb::database::get_user(std::string username,
-					  std::string password)
+std::string iotdb::database::get_user(std::string username, std::string password)
 {
 
 	// reply message
@@ -141,8 +126,7 @@ std::string iotdb::database::get_user(std::string username,
 	auto collection = database["users"];
 
 	// check if user dose not exist
-	try
-	{
+	try {
 		bsoncxx::builder::basic::document filter_document{};
 		filter_document.append(kvp("username", username));
 		filter_document.append(kvp("password", password));
@@ -150,9 +134,7 @@ std::string iotdb::database::get_user(std::string username,
 		auto cursor = collection.find_one(filter_document.view());
 		// return seccess message
 		return core::reply::answer(bsoncxx::to_json(cursor.value()));
-	}
-	catch (const mongocxx::exception &e)
-	{
+	} catch (const mongocxx::exception &e) {
 		// create json from error
 		return core::reply::wrong_request_content_type(e.what());
 	}
@@ -175,11 +157,13 @@ std::string iotdb::database::get_user(std::string username,
  * @return 						: json that if update was
  * successful or not
  */
-std::string iotdb::database::update_user(
-	std::string username, std::string password, optional_string update_username,
-	optional_string update_password, optional_string primary_phone_number,
-	optional_string primary_email, optional_string_array phone_numbers,
-	optional_string_array emails)
+std::string iotdb::database::update_user(std::string username, std::string password,
+										 optional_string update_username,
+										 optional_string update_password,
+										 optional_string primary_phone_number,
+										 optional_string primary_email,
+										 optional_string_array phone_numbers,
+										 optional_string_array emails)
 {
 
 	// reply message
@@ -195,8 +179,7 @@ std::string iotdb::database::update_user(
 	auto collection = database["users"];
 
 	// check if user dose not exist
-	try
-	{
+	try {
 		bsoncxx::builder::basic::document filter_document{};
 		filter_document.append(kvp("username", username));
 		filter_document.append(kvp("password", password));
@@ -204,52 +187,35 @@ std::string iotdb::database::update_user(
 		// create updated user
 		bsoncxx::builder::basic::document user_document{};
 
-		if (update_username.is_initialized())
-		{
-			user_document.append(
-			kvp("username", update_username.get()));
+		if (update_username.is_initialized()) {
+			user_document.append(kvp("username", update_username.get()));
 		}
 
-		if (update_password.is_initialized())
-		{
-			user_document.append(
-			kvp("password", update_password.get()));
+		if (update_password.is_initialized()) {
+			user_document.append(kvp("password", update_password.get()));
 		}
 
-		if (primary_phone_number.is_initialized())
-		{
-			user_document.append(kvp("primary_phone_number",
-						 primary_phone_number.get()));
+		if (primary_phone_number.is_initialized()) {
+			user_document.append(kvp("primary_phone_number", primary_phone_number.get()));
 		}
 
-		if (primary_email.is_initialized())
-		{
-			user_document.append(
-			kvp("primary_email", primary_email.get()));
+		if (primary_email.is_initialized()) {
+			user_document.append(kvp("primary_email", primary_email.get()));
 		}
 
-		if (phone_numbers.is_initialized())
-		{
-			user_document.append(
-			kvp("phone_numbers", [phone_numbers](sub_array child) {
-				for (size_t i = 0; i < phone_numbers.get().size();
-				 i++)
-				{
-					bsoncxx::stdx::string_view d =
-					phone_numbers.get().at(i);
+		if (phone_numbers.is_initialized()) {
+			user_document.append(kvp("phone_numbers", [phone_numbers](sub_array child) {
+				for (size_t i = 0; i < phone_numbers.get().size(); i++) {
+					bsoncxx::stdx::string_view d = phone_numbers.get().at(i);
 					child.append(d);
 				}
 			}));
 		}
 
-		if (emails.is_initialized())
-		{
-			user_document.append(
-			kvp("emails", [emails](sub_array child) {
-				for (size_t i = 0; i < emails.get().size(); i++)
-				{
-					bsoncxx::stdx::string_view d =
-					emails.get().at(i);
+		if (emails.is_initialized()) {
+			user_document.append(kvp("emails", [emails](sub_array child) {
+				for (size_t i = 0; i < emails.get().size(); i++) {
+					bsoncxx::stdx::string_view d = emails.get().at(i);
 					child.append(d);
 				}
 			}));
@@ -267,9 +233,7 @@ std::string iotdb::database::update_user(
 		collection.update_one(filter_document.view(), user_document.view());
 		// return seccess message
 		return core::reply::answer_done();
-	}
-	catch (const mongocxx::exception &e)
-	{
+	} catch (const mongocxx::exception &e) {
 		// create json from error
 		return core::reply::user_creation_failed(e.what());
 	}
@@ -281,8 +245,7 @@ std::string iotdb::database::update_user(
  * @param password		: password
  * @return				: delete was successful or not
  */
-std::string iotdb::database::delete_user(std::string username,
-					 std::string password)
+std::string iotdb::database::delete_user(std::string username, std::string password)
 {
 
 	// reply message
@@ -298,8 +261,7 @@ std::string iotdb::database::delete_user(std::string username,
 	auto collection = database["users"];
 
 	// check if user dose not exist
-	try
-	{
+	try {
 		bsoncxx::builder::basic::document filter_document{};
 		filter_document.append(kvp("username", username));
 		filter_document.append(kvp("password", password));
@@ -307,9 +269,7 @@ std::string iotdb::database::delete_user(std::string username,
 		collection.delete_one(filter_document.view());
 		// return seccess message
 		return core::reply::answer_done();
-	}
-	catch (const mongocxx::exception &e)
-	{
+	} catch (const mongocxx::exception &e) {
 		// create json from error
 		return core::reply::wrong_request_content_type(e.what());
 	}
@@ -329,10 +289,10 @@ std::string iotdb::database::delete_user(std::string username,
  * @return						: key creation was
  * successful or not
  */
-std::string iotdb::database::create_key(
-	std::string username, std::string password, std::string name,
-	std::string database_name, int valid_requests_number, int valid_read_size,
-	int valid_write_size, std::vector<std::string> access)
+std::string iotdb::database::create_key(std::string username, std::string password,
+										std::string name, std::string database_name,
+										int valid_requests_number, int valid_read_size,
+										int valid_write_size, std::vector<std::string> access)
 {
 	// reply message
 	std::string reply;
@@ -347,8 +307,7 @@ std::string iotdb::database::create_key(
 	auto collection = database["users"];
 
 	//	// check if key dose not exist
-	try
-	{
+	try {
 
 		bsoncxx::builder::basic::document find_document{};
 
@@ -361,31 +320,26 @@ std::string iotdb::database::create_key(
 		// check if key name exist
 		bsoncxx::to_json(cursor.value());
 		return core::reply::duplicate_index("duplicate key.name");
-	}
-	catch (const std::exception &e)
-	{
+	} catch (const std::exception &e) {
 		// key name is unique
 	}
 
 	// if name is unique add key
-	try
-	{
+	try {
 		bsoncxx::builder::basic::document key_document{};
 
 		// create new user
 		key_document.append(kvp("name", name));
 		key_document.append(kvp("database_name", database_name));
 		key_document.append(kvp("request_per_day", 0));
-		key_document.append(
-		kvp("valid_requests_number", valid_requests_number));
+		key_document.append(kvp("valid_requests_number", valid_requests_number));
 		key_document.append(kvp("valid_read_size", valid_read_size));
 		key_document.append(kvp("valid_write_size", valid_write_size));
 
 		key_document.append(kvp("access_level", [access](sub_array child) {
-		for (size_t i = 0; i < access.size(); i++)
-			{
-			bsoncxx::stdx::string_view d = access.at(i);
-			child.append(d);
+			for (size_t i = 0; i < access.size(); i++) {
+				bsoncxx::stdx::string_view d = access.at(i);
+				child.append(d);
 			}
 		}));
 
@@ -400,8 +354,7 @@ std::string iotdb::database::create_key(
 
 		bsoncxx::builder::basic::document update_document{};
 
-		update_document.append(
-		kvp("$addToSet", make_document(kvp("keys", key_document))));
+		update_document.append(kvp("$addToSet", make_document(kvp("keys", key_document))));
 
 		bsoncxx::builder::basic::document filter_document{};
 
@@ -413,9 +366,7 @@ std::string iotdb::database::create_key(
 
 		// return seccess message
 		return core::reply::answer_done();
-	}
-	catch (const mongocxx::exception &e)
-	{
+	} catch (const mongocxx::exception &e) {
 		// create json from error
 		return core::reply::user_creation_failed(e.what());
 	}
@@ -446,12 +397,12 @@ std::string iotdb::database::create_key(
  * or
  * not
  */
-std::string iotdb::database::update_key(
-	std::string username, std::string password, std::string name,
-	optional_string update_name, optional_string database_name,
-	optional_int valid_requests_number, optional_int request_per_day,
-	optional_int valid_read_size, optional_int valid_write_size,
-	optional_string_array access)
+std::string iotdb::database::update_key(std::string username, std::string password,
+										std::string name, optional_string update_name,
+										optional_string database_name,
+										optional_int valid_requests_number,
+										optional_int request_per_day, optional_int valid_read_size,
+										optional_int valid_write_size, optional_string_array access)
 {
 	// reply message
 	std::string reply;
@@ -466,8 +417,7 @@ std::string iotdb::database::update_key(
 	auto collection = database["users"];
 
 	// if name is unique add key
-	try
-	{
+	try {
 
 		bsoncxx::builder::basic::document find_document{};
 
@@ -493,64 +443,46 @@ std::string iotdb::database::update_key(
 		// key_document))));
 
 		// update user
-		if (update_name.is_initialized())
-		{
-			update_document.append(kvp(
-			"$set",
-			make_document(kvp("keys.$.name", update_name.get()))));
-		}
-
-		if (database_name.is_initialized())
-		{
+		if (update_name.is_initialized()) {
 			update_document.append(
-			kvp("$set", make_document(kvp("keys.$.database_name",
-							  database_name.get()))));
+				kvp("$set", make_document(kvp("keys.$.name", update_name.get()))));
 		}
 
-		if (valid_requests_number.is_initialized())
-		{
+		if (database_name.is_initialized()) {
 			update_document.append(
-			kvp("$set",
-				make_document(kvp("keys.$.valid_requests_number",
-						  valid_requests_number.get()))));
+				kvp("$set", make_document(kvp("keys.$.database_name", database_name.get()))));
 		}
 
-		if (request_per_day.is_initialized())
-		{
+		if (valid_requests_number.is_initialized()) {
+			update_document.append(kvp("$set", make_document(kvp("keys.$.valid_requests_number",
+																 valid_requests_number.get()))));
+		}
+
+		if (request_per_day.is_initialized()) {
 			update_document.append(
-			kvp("$set", make_document(kvp("keys.$.request_per_day",
-							  request_per_day.get()))));
+				kvp("$set", make_document(kvp("keys.$.request_per_day", request_per_day.get()))));
 		}
 
-		if (valid_read_size.is_initialized())
-		{
+		if (valid_read_size.is_initialized()) {
 			update_document.append(
-			kvp("$set", make_document(kvp("keys.$.valid_read_size",
-							  valid_read_size.get()))));
+				kvp("$set", make_document(kvp("keys.$.valid_read_size", valid_read_size.get()))));
 		}
 
-		if (valid_write_size.is_initialized())
-		{
-			update_document.append(kvp(
-			"$set", make_document(kvp("keys.$.valid_write_size",
-						  valid_write_size.get()))));
+		if (valid_write_size.is_initialized()) {
+			update_document.append(
+				kvp("$set", make_document(kvp("keys.$.valid_write_size", valid_write_size.get()))));
 		}
 
 		// TODO P[0] update
-		if (access.is_initialized())
-		{
+		if (access.is_initialized()) {
 
-			update_document.append(kvp(
-			"$set",
-			make_document(kvp(
-				"keys.$.access_level", [access](sub_array child) {
-				for (size_t i = 0; i < access.get().size(); i++)
-					{
-					bsoncxx::stdx::string_view d =
-						access.get().at(i);
-					child.append(d);
-					}
-				}))));
+			update_document.append(
+				kvp("$set", make_document(kvp("keys.$.access_level", [access](sub_array child) {
+						for (size_t i = 0; i < access.get().size(); i++) {
+							bsoncxx::stdx::string_view d = access.get().at(i);
+							child.append(d);
+						}
+					}))));
 
 			//			key_document.append(
 			//			kvp("access_level", ));
@@ -565,9 +497,7 @@ std::string iotdb::database::update_key(
 
 		// return seccess message
 		return core::reply::answer_done();
-	}
-	catch (const mongocxx::exception &e)
-	{
+	} catch (const mongocxx::exception &e) {
 		// create json from error
 		return core::reply::user_creation_failed(e.what());
 	}
@@ -582,8 +512,7 @@ std::string iotdb::database::update_key(
  * @param name			: name for finding key
  * @return				: users key
  */
-std::string iotdb::database::get_user_key(std::string username,
-					  std::string name)
+std::string iotdb::database::get_user_key(std::string username, std::string name)
 {
 	// reply message
 	std::string reply;
@@ -598,8 +527,7 @@ std::string iotdb::database::get_user_key(std::string username,
 	auto collection = database["users"];
 
 	// check if user dose not exist
-	try
-	{
+	try {
 		bsoncxx::builder::basic::document filter_document{};
 		filter_document.append(kvp("username", username));
 		filter_document.append(kvp("keys.name", name));
@@ -609,34 +537,23 @@ std::string iotdb::database::get_user_key(std::string username,
 		// get query document of request
 		bsoncxx::array::view array;
 		std::string query_array{""};
-		try
-		{
+		try {
 			array = cursor->view()["keys"].get_array().value;
 
 			// document vector
-			for (auto &doc : array)
-			{
-				if (doc.get_document()
-					.view()["name"]
-					.get_utf8()
-					.value.to_string() == name)
-				{
-					query_array =
-					bsoncxx::to_json(doc.get_document());
+			for (auto &doc : array) {
+				if (doc.get_document().view()["name"].get_utf8().value.to_string() == name) {
+					query_array = bsoncxx::to_json(doc.get_document());
 				}
 			}
-		}
-		catch (std::exception &e)
-		{
+		} catch (std::exception &e) {
 
 			return core::reply::answer_not_found(e.what());
 		}
 
 		// return seccess message
 		return core::reply::answer(query_array);
-	}
-	catch (const mongocxx::exception &e)
-	{
+	} catch (const mongocxx::exception &e) {
 		// create json from error
 		return core::reply::wrong_request_content_type(e.what());
 	}
@@ -649,8 +566,7 @@ std::string iotdb::database::get_user_key(std::string username,
  * @param password		: password of user
  * @return				: all keys in json
  */
-std::string iotdb::database::get_user_keys(std::string username,
-					   std::string password)
+std::string iotdb::database::get_user_keys(std::string username, std::string password)
 {
 
 	// reply message
@@ -666,8 +582,7 @@ std::string iotdb::database::get_user_keys(std::string username,
 	auto collection = database["users"];
 
 	// check if user dose not exist
-	try
-	{
+	try {
 		bsoncxx::builder::basic::document filter_document{};
 		filter_document.append(kvp("username", username));
 		filter_document.append(kvp("password", password));
@@ -677,8 +592,7 @@ std::string iotdb::database::get_user_keys(std::string username,
 		// get query document of request
 		bsoncxx::array::view array;
 		std::string query_array{""};
-		try
-		{
+		try {
 			array = cursor->view()["keys"].get_array().value;
 
 			// document vector
@@ -694,18 +608,14 @@ std::string iotdb::database::get_user_keys(std::string username,
 
 			//				}
 			//			}
-		}
-		catch (std::exception &e)
-		{
+		} catch (std::exception &e) {
 
 			return core::reply::answer_not_found(e.what());
 		}
 
 		// return seccess message
 		return core::reply::answer(bsoncxx::to_json(array));
-	}
-	catch (const mongocxx::exception &e)
-	{
+	} catch (const mongocxx::exception &e) {
 		// create json from error
 		return core::reply::wrong_request_content_type(e.what());
 	}
@@ -720,9 +630,8 @@ std::string iotdb::database::get_user_keys(std::string username,
  * @param name				: name of key
  * @return 					: key in json
  */
-std::string iotdb::database::delete_user_key(std::string username,
-						 std::string password,
-						 std::string name)
+std::string iotdb::database::delete_user_key(std::string username, std::string password,
+											 std::string name)
 {
 
 	// reply message
@@ -737,14 +646,12 @@ std::string iotdb::database::delete_user_key(std::string username,
 	// create collection
 	auto collection = database["users"];
 
-	try
-	{
+	try {
 
 		bsoncxx::builder::basic::document update_document{};
 		bsoncxx::builder::basic::document sub_update_document{};
 		sub_update_document.append(kvp("name", name));
-		update_document.append(
-		kvp("$pull", make_document(kvp("keys", sub_update_document))));
+		update_document.append(kvp("$pull", make_document(kvp("keys", sub_update_document))));
 
 		bsoncxx::builder::basic::document filter_document{};
 
@@ -756,9 +663,7 @@ std::string iotdb::database::delete_user_key(std::string username,
 
 		// return seccess message
 		return core::reply::answer_done();
-	}
-	catch (const mongocxx::exception &e)
-	{
+	} catch (const mongocxx::exception &e) {
 		// create json from error
 		return core::reply::user_creation_failed(e.what());
 	}
@@ -772,8 +677,7 @@ std::string iotdb::database::delete_user_key(std::string username,
  * @return					: return all keys of user in
  * json
  */
-std::string iotdb::database::delete_user_keys(std::string username,
-						  std::string password)
+std::string iotdb::database::delete_user_keys(std::string username, std::string password)
 {
 
 	// reply message
@@ -789,12 +693,10 @@ std::string iotdb::database::delete_user_keys(std::string username,
 	auto collection = database["users"];
 
 	// delete keys
-	try
-	{
+	try {
 
 		bsoncxx::builder::basic::document update_document{};
-		update_document.append(
-		kvp("$unset", make_document(kvp("keys", ""))));
+		update_document.append(kvp("$unset", make_document(kvp("keys", ""))));
 
 		bsoncxx::builder::basic::document filter_document{};
 		filter_document.append(kvp("username", username));
@@ -805,9 +707,7 @@ std::string iotdb::database::delete_user_keys(std::string username,
 
 		// return seccess message
 		return core::reply::answer_done();
-	}
-	catch (const mongocxx::exception &e)
-	{
+	} catch (const mongocxx::exception &e) {
 		// create json from error
 		return core::reply::user_creation_failed(e.what());
 	}
@@ -830,11 +730,11 @@ std::string iotdb::database::delete_user_keys(std::string username,
  * or
  * not
  */
-std::string iotdb::database::create_payment(
-	std::string username, std::string password, int main_value,
-	optional_int discount_value, optional_string discount_type,
-	int expiration_time, int request_numbers_per_day, int read_size,
-	int write_size)
+std::string iotdb::database::create_payment(std::string username, std::string password,
+											int main_value, optional_int discount_value,
+											optional_string discount_type, int expiration_time,
+											int request_numbers_per_day, int read_size,
+											int write_size)
 {
 
 	// reply message
@@ -850,29 +750,23 @@ std::string iotdb::database::create_payment(
 	auto collection = database["users"];
 
 	// if name is unique add key
-	try
-	{
+	try {
 		bsoncxx::builder::basic::document key_document{};
 
 		// create new user
 		key_document.append(kvp("main_value", main_value));
 
-		if (discount_value.is_initialized())
-		{
-			key_document.append(
-			kvp("discount_value", discount_value.get()));
+		if (discount_value.is_initialized()) {
+			key_document.append(kvp("discount_value", discount_value.get()));
 		}
 
-		if (discount_type.is_initialized())
-		{
-			key_document.append(
-			kvp("discount_type", discount_type.get()));
+		if (discount_type.is_initialized()) {
+			key_document.append(kvp("discount_type", discount_type.get()));
 		}
 
 		key_document.append(kvp("expiration_time", expiration_time));
 
-		key_document.append(
-		kvp("request_numbers_per_day", request_numbers_per_day));
+		key_document.append(kvp("request_numbers_per_day", request_numbers_per_day));
 		key_document.append(kvp("read_size", read_size));
 		key_document.append(kvp("write_size", write_size));
 
@@ -887,8 +781,7 @@ std::string iotdb::database::create_payment(
 
 		bsoncxx::builder::basic::document update_document{};
 
-		update_document.append(
-		kvp("$addToSet", make_document(kvp("payments", key_document))));
+		update_document.append(kvp("$addToSet", make_document(kvp("payments", key_document))));
 
 		bsoncxx::builder::basic::document filter_document{};
 
@@ -900,9 +793,7 @@ std::string iotdb::database::create_payment(
 
 		// return seccess message
 		return core::reply::answer_done();
-	}
-	catch (const mongocxx::exception &e)
-	{
+	} catch (const mongocxx::exception &e) {
 		// create json from error
 		return core::reply::user_creation_failed(e.what());
 	}
@@ -914,8 +805,7 @@ std::string iotdb::database::create_payment(
  * @param password		: password of user
  * @return				: get all payments in json
  */
-std::string iotdb::database::get_payments(std::string username,
-					  std::string password)
+std::string iotdb::database::get_payments(std::string username, std::string password)
 {
 
 	// create connection
@@ -928,8 +818,7 @@ std::string iotdb::database::get_payments(std::string username,
 	auto collection = database["users"];
 
 	// check if user dose not exist
-	try
-	{
+	try {
 		bsoncxx::builder::basic::document filter_document{};
 		filter_document.append(kvp("username", username));
 		filter_document.append(kvp("password", password));
@@ -938,21 +827,16 @@ std::string iotdb::database::get_payments(std::string username,
 
 		// get query document of request
 		bsoncxx::array::view array;
-		try
-		{
+		try {
 			array = cursor->view()["payments"].get_array().value;
-		}
-		catch (std::exception &e)
-		{
+		} catch (std::exception &e) {
 
 			return core::reply::answer_not_found(e.what());
 		}
 
 		// return seccess message
 		return core::reply::answer(bsoncxx::to_json(array));
-	}
-	catch (const mongocxx::exception &e)
-	{
+	} catch (const mongocxx::exception &e) {
 		// create json from error
 		return core::reply::wrong_request_content_type(e.what());
 	}

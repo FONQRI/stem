@@ -1,11 +1,11 @@
 #ifndef TEMPLATE_FILE_HANDLER_H
 #define TEMPLATE_FILE_HANDLER_H
 
-#include "h2o.h"
-#include "h2o/http1.h"
-#include "h2o/http2.h"
-#include "h2o/memcached.h"
 #include <errno.h>
+#include <h2o.h>
+#include <h2o/http1.h>
+#include <h2o/http2.h>
+#include <h2o/memcached.h>
 #include <limits.h>
 #include <netinet/in.h>
 #include <signal.h>
@@ -23,13 +23,13 @@
 #include <streambuf>
 #include <string>
 
+#include "global_server_variables.hpp"
 #include "path_libraries.h"
 #include <inja/inja.hpp>
 
 // Just for convenience
 using namespace inja;
 using json = nlohmann::json;
-std::string doc_root{"resources/doc_root"};
 namespace ario {
 std::string template_file_handler(std::string path, json data = json{})
 {
@@ -37,7 +37,8 @@ std::string template_file_handler(std::string path, json data = json{})
 	//std::filesystem::current_path().string()
 	std::string filename;
 	filename += path_libraries::add_slash_at_end(std::filesystem::current_path().string())
-				+ doc_root + path_libraries::add_slash_at_end(path.c_str()) + "index.html";
+				+ ario_vars::doc_root + path_libraries::add_slash_at_end(path.c_str())
+				+ "index.html";
 
 	std::clog << filename << std::endl;
 

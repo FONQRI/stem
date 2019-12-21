@@ -38,7 +38,6 @@
 #define USE_MEMCACHED 0
 
 #include "global_server_variables.hpp"
-#include "template_file_handler.hpp"
 
 #include <filesystem>
 #include <fstream>

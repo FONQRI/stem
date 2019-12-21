@@ -1,9 +1,11 @@
 #include "collection_methods.h"
-#include "core/reply.h"
-#include "security/password.h"
+#include "reply.h"
+//#include "security/password.h"
 
 #include <chrono>
 #include <iostream>
+
+#include <nlohmann/json.hpp>
 
 // mongocxx
 #include <mongocxx/exception/exception.hpp>
@@ -967,15 +969,9 @@ std::string iotdb::database::find_one_and_replace(
  */
 
 std::string iotdb::database::delete_many(std::string username, std::string database_name,
-										 bsoncxx::types::b_document query_document,
-										 boost::optional<bsoncxx::types::b_document> collation,
-										 boost::optional<std::string> acknowledge_level,
-										 boost::optional<std::string> tag,
-										 boost::optional<bool> journal,
-										 boost::optional<int> majority,
-										 boost::optional<int> timeout, boost::optional<int> nodes)
+										 nlohmann::json request)
 {
-
+	std::clog << __FUNCTION__ << __LINE__ << std::endl;
 	// create connection
 	mongocxx::client connection{mongocxx::uri{}};
 
@@ -984,61 +980,75 @@ std::string iotdb::database::delete_many(std::string username, std::string datab
 
 	// create collection
 	auto collection = database[database_name];
+	std::clog << __FUNCTION__ << __LINE__ << std::endl;
 
 	try {
 
 		// create option
 		mongocxx::options::delete_options options = mongocxx::options::delete_options{};
-		if (collation.is_initialized()) {
-			options.collation(collation.get().view());
-		}
 
-		if (journal.is_initialized() || majority.is_initialized() || timeout.is_initialized()
-			|| nodes.is_initialized() || tag.is_initialized()
-			|| acknowledge_level.is_initialized()) {
+		std::clog << __FUNCTION__ << __LINE__ << std::endl;
+		//		if (!request.get("options").is_null()) {
 
-			// create write_concern
-			// https://docs.mongodb.com/manual/reference/glossary/#term-write-concern
-			mongocxx::write_concern write_concern = mongocxx::write_concern();
+		//			std::clog << __FUNCTION__ << __LINE__ << std::endl;
+		//			if (!request["options"]["Collation"].is_null()) {
+		//				options.collation(bsoncxx::from_json(request["Collation"]));
+		//			}
 
-			if (journal.is_initialized()) {
-				write_concern.journal(journal.get());
-			}
-			if (majority.is_initialized()) {
+		//			if (!request["options"]["write_concern"].is_null()) {
 
-				write_concern.majority(std::chrono::milliseconds(majority.get()));
-			}
+		//				// create write_concern
+		//				// https://docs.mongodb.com/manual/reference/glossary/#term-write-concern
+		//				mongocxx::write_concern write_concern = mongocxx::write_concern();
 
-			if (timeout.is_initialized()) {
-				write_concern.timeout(std::chrono::milliseconds(timeout.get()));
-			}
+		//				if (!request["options"]["journal"].is_null()) {
+		//					write_concern.journal(request["journal"]);
+		//				}
+		//				if (!request["options"]["majority"].is_null()) {
 
-			if (nodes.is_initialized()) {
-				write_concern.nodes(nodes.get());
-			}
+		//					write_concern.majority(std::chrono::milliseconds(request["majority"]));
+		//				}
 
-			if (tag.is_initialized()) {
-				write_concern.tag(mongocxx::stdx::string_view(tag.get()));
-			}
+		//				if (!request["options"]["timeout"].is_null()) {
+		//					write_concern.timeout(std::chrono::milliseconds(request["timeout"]));
+		//				}
 
-			if (acknowledge_level.is_initialized()) {
-				if (acknowledge_level.get() == "k_acknowledged") {
-					write_concern.acknowledge_level(mongocxx::write_concern::level::k_acknowledged);
-				} else if (acknowledge_level.get() == "k_default") {
-					write_concern.acknowledge_level(mongocxx::write_concern::level::k_acknowledged);
-				} else if (acknowledge_level.get() == "k_majority") {
-					write_concern.acknowledge_level(mongocxx::write_concern::level::k_majority);
-				} else if (acknowledge_level.get() == "k_tag") {
-					write_concern.acknowledge_level(mongocxx::write_concern::level::k_tag);
-				} else if (acknowledge_level.get() == "k_unacknowledged") {
-					write_concern.acknowledge_level(
-						mongocxx::write_concern::level::k_unacknowledged);
-				}
-			}
+		//				if (!request["options"]["nodes"].is_null()) {
+		//					write_concern.nodes(request["nodes"]);
+		//				}
 
-			// add created write_concern to options
-			options.write_concern(write_concern);
-		}
+		//				if (!request["options"]["tag"].is_null()) {
+		//					write_concern.tag(mongocxx::stdx::string_view(request["tag"]));
+		//				}
+
+		//				if (!request["options"]["acknowledge_level"].is_null()) {
+		//					std::string acknowledge_level{request["options"]["acknowledge_level"]};
+
+		//					if (acknowledge_level == "k_acknowledged") {
+		//						write_concern.acknowledge_level(
+		//							mongocxx::write_concern::level::k_acknowledged);
+		//					} else if (acknowledge_level == "k_default") {
+		//						write_concern.acknowledge_level(
+		//							mongocxx::write_concern::level::k_acknowledged);
+		//					} else if (acknowledge_level == "k_majority") {
+		//						write_concern.acknowledge_level(mongocxx::write_concern::level::k_majority);
+		//					} else if (acknowledge_level == "k_tag") {
+		//						write_concern.acknowledge_level(mongocxx::write_concern::level::k_tag);
+		//					} else if (acknowledge_level == "k_unacknowledged") {
+		//						write_concern.acknowledge_level(
+		//							mongocxx::write_concern::level::k_unacknowledged);
+		//					}
+		//				}
+
+		//				// add created write_concern to options
+		//				options.write_concern(write_concern);
+		//			}
+		//		}
+		//FIXME check request["query"]
+		std::clog << __FUNCTION__ << __LINE__ << std::endl;
+		std::clog << __FUNCTION__ << __LINE__ << std::endl;
+		auto query_document = bsoncxx::from_json(request.value("query", nlohmann::json{}).dump());
+		std::clog << __FUNCTION__ << __LINE__ << std::endl;
 
 		// create cursor bu qyery and options
 		collection.delete_many({query_document}, options);

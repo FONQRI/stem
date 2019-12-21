@@ -1,8 +1,7 @@
 #include "ario_server.hpp"
 #include <filesystem>
 
-#include "home_service_handler.hpp"
-#include "template_file_handler.hpp"
+#include "route.h"
 
 #include <inja/parser.hpp>
 #include <nlohmann/json.hpp>
@@ -14,7 +13,8 @@
  * [ ] rewite controllers to become sprate from server part(using datamodel for interface)
  * [ ] write h2o handlers for controllers
  * [ ] find good way for auth prodects and database and statices
- * [ ]
+ * [ ] use connection pool instade of creating one connection er request
+ * [ ] update add comments
  *
  *
  *
@@ -38,17 +38,8 @@ int main(int argc, char **argv)
 
 	h2o_config_init(&config);
 	hostconf = h2o_config_register_host(&config, h2o_iovec_init(H2O_STRLIT("default")), 65535);
-	h2o_file_register(h2o_config_register_path(hostconf, "/files/", 0), "resources/doc_root", NULL,
-					  NULL, 0);
+	route router(hostconf);
 
-	h2o_file_register(h2o_config_register_path(hostconf, "/favicon.ico", 0),
-					  "resources/doc_root/favicon.ico", NULL, NULL, 0);
-
-	//	h2o_file_register(h2o_config_register_path(hostconf, "/favicon.ico", 0),
-	//					  "resources/doc_root/favicon.ico", NULL, NULL, 0);
-
-	register_handler(hostconf, "/404", ario::status_404_service_handler);
-	register_handler(hostconf, "/", ario::home_service_handler);
 #if H2O_USE_LIBUV
 
 	uv_loop_t loop;
