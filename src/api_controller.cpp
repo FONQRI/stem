@@ -3,13 +3,15 @@
 #include <iostream>
 #include <string>
 
+#include "server_library.h"
+
 fonqri::api::database::opration op;
 
 int ario::api::api_controller(h2o_handler_t *self, h2o_req_t *req)
 {
 	static h2o_generator_t generator = {NULL, NULL};
 
-	if (!h2o_memis(req->method.base, req->method.len, H2O_STRLIT("POST")))
+	if (!server_library::if_http_method_not_match(req, "POST"))
 		return -1;
 
 	std::string response;

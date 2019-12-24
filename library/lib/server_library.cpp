@@ -34,3 +34,10 @@ std::map<std::string, std::string> server_library::get_entities(h2o_req_t *req)
 	}
 	return ret;
 }
+
+bool server_library::if_http_method_not_match(h2o_req_t *req, std::string method)
+{
+	if (h2o_memis(req->method.base, req->method.len, H2O_STRLIT(method.c_str())))
+		return false;
+	return true;
+}

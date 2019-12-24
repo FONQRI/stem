@@ -1,5 +1,7 @@
 #include "collection_methods.h"
+#include "database_globals.h"
 #include "reply.h"
+
 //#include "security/password.h"
 
 #include <chrono>
@@ -33,10 +35,10 @@ std::string iotdb::database::insert_many(
 	boost::optional<bool> bypass_document_validation)
 {
 	// create connection
-	mongocxx::client connection{mongocxx::uri{}};
+	auto connection = database_globals::get_mutable_instance().get_connection();
 
 	// database
-	auto database = connection[username];
+	auto database = (*connection)[username];
 
 	// create collection
 	auto collection = database[database_name];

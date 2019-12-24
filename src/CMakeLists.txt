@@ -9,12 +9,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
 ##seting file pathes
-file(GLOB Headers ./*.hpp ./*.h )
 file(GLOB Cpps ./*.cpp ./*.qmodel ./*.md)
-
-
-file(GLOB ControllersHeaders ./controllers/*.hpp  )
-file(GLOB ControllersCpps ./*.cpp ./*.qmodel ./*.md)
 
 
 set (CMAKE_CXX_STANDARD 17)
@@ -36,8 +31,8 @@ endif()
   add_subdirectory(database)
 #  add_subdirectory(controllers)
   include_directories(${Boost_INCLUDE_DIRS})
-  add_executable(${PROJECT_NAME} "main.cpp" ${Cpps} ${ControllersCpps} )
-  add_dependencies(${PROJECT_NAME} database)
+  add_executable(${PROJECT_NAME} "main.cpp" ${Cpps} )
+#  add_dependencies(${PROJECT_NAME} database)
 
   target_link_libraries(${PROJECT_NAME}
     Boost::date_time
@@ -69,7 +64,8 @@ endif()
 
     fonqri::library
     )
-
+message("FONQRI TEST ")
+message(fonqri::database)
 
 set(Boost_USE_STATIC_LIBS        ON) # only find static libs
 set(Boost_USE_MULTITHREADED      ON)

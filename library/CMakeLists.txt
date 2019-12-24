@@ -19,7 +19,7 @@ if(Boost_FOUND)
 
 
   include_directories(${Boost_INCLUDE_DIRS})
-  add_library(${PROJECT_NAME} ${Cpps} )
+  add_library(${PROJECT_NAME} STATIC ${Cpps} )
 
   # Add a library with the above sources
   add_library(fonqri::library ALIAS ${PROJECT_NAME})

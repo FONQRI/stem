@@ -36,7 +36,7 @@ if(NOT Boost_FOUND)
   message(FATAL "Boost Not Found")
 endif()
   include_directories(${Boost_INCLUDE_DIRS})
-  add_library(${PROJECT_NAME} ${ControllersHeaders} ${ControllersCpps} )
+  add_library(${PROJECT_NAME} STATIC ${ControllersHeaders} ${ControllersCpps} )
   add_library(fonqri::database ALIAS ${PROJECT_NAME})
 
   target_include_directories(${PROJECT_NAME}
