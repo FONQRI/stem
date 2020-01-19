@@ -19,13 +19,13 @@ using bsoncxx::builder::basic::kvp;
 using bsoncxx::builder::basic::make_document;
 
 // TODO add indexes
-iotdb::database::database_globals::database_globals()
+ario::database::database_globals::database_globals()
 	: connection_pool{mongocxx::uri{}}
 {
 	initialize();
 }
 
-void iotdb::database::database_globals::initialize()
+void ario::database::database_globals::initialize()
 {
 
 	//	iotdb::database::database_urls_and_ports = database_urls_and_ports;
@@ -33,17 +33,17 @@ void iotdb::database::database_globals::initialize()
 	create_indexes();
 }
 
-mongocxx::pool::entry iotdb::database::database_globals::get_connection()
+mongocxx::pool::entry ario::database::database_globals::get_connection()
 {
 	return connection_pool.acquire();
 }
 
-mongocxx::stdx::optional<mongocxx::pool::entry> iotdb::database::database_globals::try_get_connection()
+mongocxx::stdx::optional<mongocxx::pool::entry> ario::database::database_globals::try_get_connection()
 {
 	return connection_pool.try_acquire();
 }
 
-bool iotdb::database::database_globals::create_indexes()
+bool ario::database::database_globals::create_indexes()
 {
 	auto index_document = bsoncxx::builder::basic::document{};
 	auto index_document_phone_number = bsoncxx::builder::basic::document{};
@@ -76,7 +76,7 @@ bool iotdb::database::database_globals::create_indexes()
 	return true;
 }
 
-bool iotdb::database::database_globals::create_pool()
+bool ario::database::database_globals::create_pool()
 {
 
 	return true;

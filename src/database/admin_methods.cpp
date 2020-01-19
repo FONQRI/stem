@@ -100,8 +100,8 @@ using bsoncxx::builder::basic::sub_array;
 //	return reply;
 //}
 
-bool iotdb::database::admin::m_check_key_database(std::string username, std::string key,
-												  std::string &reply, std::string function_name)
+bool ario::database::admin::m_check_key_database(std::string username, std::string key,
+												 std::string &reply, std::string function_name)
 {
 
 	// create connection
@@ -189,8 +189,8 @@ bool iotdb::database::admin::m_check_key_database(std::string username, std::str
 	return "";
 }
 
-bool iotdb::database::admin::m_check_key(std::string username, std::string request_key_name,
-										 std::string &reply, std::string function_name)
+bool ario::database::admin::m_check_key(std::string username, std::string request_key_name,
+										std::string &reply, std::string function_name)
 {
 	//	// reply message
 	//	std::string reply;

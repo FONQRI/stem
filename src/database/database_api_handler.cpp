@@ -4,7 +4,7 @@
 
 fonqri::api::database::opration::opration()
 {
-	function_mapper["delete_many"] = iotdb::database::delete_many;
+	//	function_mapper["delete_many"] = ario::database::delete_many;
 }
 
 std::string fonqri::api::database::opration::handler(std::string database_name,
@@ -13,6 +13,5 @@ std::string fonqri::api::database::opration::handler(std::string database_name,
 {
 	std::string reply = function_mapper[opration](database_name, collection_name,
 												  json::parse(request_str));
-
 	return reply;
 }

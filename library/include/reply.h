@@ -10,7 +10,7 @@
 
 #include <string>
 
-namespace iotdb {
+namespace ario {
 namespace core {
 namespace reply {
 

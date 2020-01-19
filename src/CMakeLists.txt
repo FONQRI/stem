@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(MongodbOdl)
+project(Stem_exe)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -9,7 +9,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
 ##seting file pathes
-file(GLOB Cpps ./*.cpp ./*.qmodel ./*.md)
+file(GLOB Cpps ./*.cpp ./*.qmodel ./*.md ./api/*.cpp)
 
 
 set (CMAKE_CXX_STANDARD 17)

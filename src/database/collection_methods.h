@@ -22,6 +22,8 @@
 
 #include <nlohmann/json.hpp>
 
+using json = nlohmann::json;
+
 typedef boost::optional<bool> optional_bool;
 typedef boost::optional<bsoncxx::types::b_document> optional_ducument;
 typedef boost::optional<std::string> optional_string;
@@ -29,8 +31,7 @@ typedef boost::optional<int> optional_int;
 typedef boost::optional<size_t> optional_size;
 typedef boost::optional<bsoncxx::types::b_array> optional_array;
 
-namespace iotdb {
-namespace database {
+namespace ario::database::collection {
 
 // TODO [0] add writeConcern and update comment
 std::string insert_many(std::string username, std::string database_name,
@@ -49,13 +50,7 @@ std::string insert_one(std::string username, std::string database_name,
 					   boost::optional<int> nodes, boost::optional<bool> ordered,
 					   boost::optional<bool> bypass_document_validation);
 
-std::string find(std::string username, std::string database_name,
-				 bsoncxx::types::b_document query_document,
-				 boost::optional<bsoncxx::types::b_document> projection_document,
-				 boost::optional<bsoncxx::types::b_document> sort_document,
-				 boost::optional<bsoncxx::types::b_document> min_document,
-				 boost::optional<bsoncxx::types::b_document> max_document,
-				 boost::optional<size_t> limit_number_of_docs = 0);
+std::string find(std::string username, std::string database_name, json query, json options);
 
 std::string find_one(std::string username, std::string database_name,
 					 bsoncxx::types::b_document query_document,
@@ -109,7 +104,8 @@ std::string find_one_and_replace(std::string username, std::string database_name
 								 boost::optional<bool> upsert,
 								 boost::optional<bool> bypass_document_validation);
 
-std::string delete_many(std::string username, std::string database_name, nlohmann::json request);
+std::string delete_many(std::string username, std::string database_name, nlohmann::json query,
+						nlohmann::json delete_options);
 
 std::string delete_one(std::string username, std::string database_name,
 					   bsoncxx::types::b_document query_document,
@@ -169,7 +165,7 @@ std::string aggregate(std::string username, std::string database_name, optional_
 					  optional_int majority, optional_int timeout, optional_int nodes,
 					  optional_ducument hint, optional_string hint_str,
 					  optional_array pipeline_array);
-} // namespace database
-} // namespace iotdb
+} // namespace ario::database::collection
+} // namespace ario
 
 #endif // DATABASE_COLLECTIONS_METHODS_H

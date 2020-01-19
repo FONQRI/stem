@@ -28,7 +28,7 @@ typedef boost::optional<std::vector<std::string>> optional_string_array;
 typedef boost::optional<int> optional_int;
 typedef boost::optional<size_t> optional_size;
 
-namespace iotdb {
+namespace ario {
 namespace database {
 namespace admin {
 // std::string get_user(std::string username);
@@ -36,13 +36,13 @@ namespace admin {
 // std::string increase_request(std::string username, std::string name,
 //				 int request_per_day);
 
-bool m_check_key_database(std::string username, std::string key,
-			  std::string &reply, std::string function_name);
+bool m_check_key_database(std::string username, std::string key, std::string &reply,
+						  std::string function_name);
 
-bool m_check_key(std::string username, std::string request_key_name,
-		 std::string &reply, std::string function_name);
-}
-} // iotdb
-} // database
+bool m_check_key(std::string username, std::string request_key_name, std::string &reply,
+				 std::string function_name);
+} // namespace admin
+} // namespace database
+} // namespace ario
 
 #endif // DATABASE_ADMIN_METHODS_H

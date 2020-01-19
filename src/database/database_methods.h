@@ -28,7 +28,7 @@ typedef boost::optional<std::vector<std::string>> optional_string_array;
 typedef boost::optional<int> optional_int;
 typedef boost::optional<size_t> optional_size;
 
-namespace iotdb {
+namespace ario {
 namespace database {
 
 } // iotdb

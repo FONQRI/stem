@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(MongodbOdl)
+project(Stem)
 
 find_package(Boost 1.70 REQUIRED COMPONENTS
   date_time

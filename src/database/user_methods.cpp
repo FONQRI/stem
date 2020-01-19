@@ -34,7 +34,7 @@ using bsoncxx::builder::basic::sub_array;
  * was
  * successful or not
  */
-std::string iotdb::database::create_user(std::string username, std::string password,
+std::string ario::database::create_user(std::string username, std::string password,
 										 std::string primary_phone_number,
 										 std::string primary_email,
 										 optional_string_array phone_numbers,
@@ -110,7 +110,7 @@ std::string iotdb::database::create_user(std::string username, std::string passw
  * @return			: user in json if there is such user and failed
  * json if there is no such user
  */
-std::string iotdb::database::get_user(std::string username, std::string password)
+std::string ario::database::get_user(std::string username, std::string password)
 {
 
 	// reply message
@@ -157,7 +157,7 @@ std::string iotdb::database::get_user(std::string username, std::string password
  * @return 						: json that if update was
  * successful or not
  */
-std::string iotdb::database::update_user(std::string username, std::string password,
+std::string ario::database::update_user(std::string username, std::string password,
 										 optional_string update_username,
 										 optional_string update_password,
 										 optional_string primary_phone_number,
@@ -245,7 +245,7 @@ std::string iotdb::database::update_user(std::string username, std::string passw
  * @param password		: password
  * @return				: delete was successful or not
  */
-std::string iotdb::database::delete_user(std::string username, std::string password)
+std::string ario::database::delete_user(std::string username, std::string password)
 {
 
 	// reply message
@@ -289,7 +289,7 @@ std::string iotdb::database::delete_user(std::string username, std::string passw
  * @return						: key creation was
  * successful or not
  */
-std::string iotdb::database::create_key(std::string username, std::string password,
+std::string ario::database::create_key(std::string username, std::string password,
 										std::string name, std::string database_name,
 										int valid_requests_number, int valid_read_size,
 										int valid_write_size, std::vector<std::string> access)
@@ -397,7 +397,7 @@ std::string iotdb::database::create_key(std::string username, std::string passwo
  * or
  * not
  */
-std::string iotdb::database::update_key(std::string username, std::string password,
+std::string ario::database::update_key(std::string username, std::string password,
 										std::string name, optional_string update_name,
 										optional_string database_name,
 										optional_int valid_requests_number,
@@ -512,7 +512,7 @@ std::string iotdb::database::update_key(std::string username, std::string passwo
  * @param name			: name for finding key
  * @return				: users key
  */
-std::string iotdb::database::get_user_key(std::string username, std::string name)
+std::string ario::database::get_user_key(std::string username, std::string name)
 {
 	// reply message
 	std::string reply;
@@ -566,7 +566,7 @@ std::string iotdb::database::get_user_key(std::string username, std::string name
  * @param password		: password of user
  * @return				: all keys in json
  */
-std::string iotdb::database::get_user_keys(std::string username, std::string password)
+std::string ario::database::get_user_keys(std::string username, std::string password)
 {
 
 	// reply message
@@ -630,7 +630,7 @@ std::string iotdb::database::get_user_keys(std::string username, std::string pas
  * @param name				: name of key
  * @return 					: key in json
  */
-std::string iotdb::database::delete_user_key(std::string username, std::string password,
+std::string ario::database::delete_user_key(std::string username, std::string password,
 											 std::string name)
 {
 
@@ -677,7 +677,7 @@ std::string iotdb::database::delete_user_key(std::string username, std::string p
  * @return					: return all keys of user in
  * json
  */
-std::string iotdb::database::delete_user_keys(std::string username, std::string password)
+std::string ario::database::delete_user_keys(std::string username, std::string password)
 {
 
 	// reply message
@@ -730,7 +730,7 @@ std::string iotdb::database::delete_user_keys(std::string username, std::string 
  * or
  * not
  */
-std::string iotdb::database::create_payment(std::string username, std::string password,
+std::string ario::database::create_payment(std::string username, std::string password,
 											int main_value, optional_int discount_value,
 											optional_string discount_type, int expiration_time,
 											int request_numbers_per_day, int read_size,
@@ -805,7 +805,7 @@ std::string iotdb::database::create_payment(std::string username, std::string pa
  * @param password		: password of user
  * @return				: get all payments in json
  */
-std::string iotdb::database::get_payments(std::string username, std::string password)
+std::string ario::database::get_payments(std::string username, std::string password)
 {
 
 	// create connection

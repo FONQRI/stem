@@ -5,8 +5,7 @@
 
 #include "server_library.h"
 
-fonqri::api::database::opration op;
-
+//fonqri::api::database::opration op;
 int ario::api::api_controller(h2o_handler_t *self, h2o_req_t *req)
 {
 	static h2o_generator_t generator = {NULL, NULL};
@@ -16,8 +15,13 @@ int ario::api::api_controller(h2o_handler_t *self, h2o_req_t *req)
 
 	std::string response;
 
+	json request = json::parse(req->entity.base);
+
+	json query = request["query"];
+	json options = request["options"];
+
 	try {
-		response = op.handler("test", "myCollection", "delete_many", req->entity.base);
+		//		response = op.handler("test", "myCollection", "delete_many", req->entity.base);
 	} catch (std::exception &e) {
 		std::clog << e.what() << std::endl;
 	}

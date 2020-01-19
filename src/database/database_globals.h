@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace iotdb {
+namespace ario {
 namespace database {
 class database_globals : public boost::serialization::singleton<database_globals>
 {

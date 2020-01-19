@@ -1,9 +1,11 @@
 #include "route.h"
 
-#include "api_controller.h"
 #include "ario_server.hpp"
 #include "home_service_handler.hpp"
 #include "status_404_handler.h"
+
+#include "api/api_controller.h"
+#include "api/find_controller.h"
 
 route::route(h2o_hostconf_t *hostconf)
 {
@@ -17,6 +19,7 @@ route::route(h2o_hostconf_t *hostconf)
 	//					  "resources/doc_root/favicon.ico", NULL, NULL, 0);
 
 	register_handler(hostconf, "/404", ario::status_404_service_handler);
+	register_handler(hostconf, "/api/find", ario::api::find_controller);
 	register_handler(hostconf, "/api", ario::api::api_controller);
 
 	register_handler(hostconf, "/", ario::home_service_handler);

@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 	//	static h2o_context_t ctx;
 	//	static h2o_multithread_receiver_t libmemcached_receiver;
 	//	static h2o_accept_ctx_t accept_ctx;
-	iotdb::database::database_globals::get_mutable_instance();
+	ario::database::database_globals::get_mutable_instance();
 
 	h2o_hostconf_t *hostconf;
 
