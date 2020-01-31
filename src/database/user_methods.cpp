@@ -34,11 +34,10 @@ using bsoncxx::builder::basic::sub_array;
  * was
  * successful or not
  */
-std::string ario::database::create_user(std::string username, std::string password,
-										 std::string primary_phone_number,
-										 std::string primary_email,
-										 optional_string_array phone_numbers,
-										 optional_string_array emails)
+std::string stem::database::create_user(std::string username, std::string password,
+										std::string primary_phone_number, std::string primary_email,
+										optional_string_array phone_numbers,
+										optional_string_array emails)
 {
 	// reply message
 	std::string reply;
@@ -110,7 +109,7 @@ std::string ario::database::create_user(std::string username, std::string passwo
  * @return			: user in json if there is such user and failed
  * json if there is no such user
  */
-std::string ario::database::get_user(std::string username, std::string password)
+std::string stem::database::get_user(std::string username, std::string password)
 {
 
 	// reply message
@@ -157,13 +156,13 @@ std::string ario::database::get_user(std::string username, std::string password)
  * @return 						: json that if update was
  * successful or not
  */
-std::string ario::database::update_user(std::string username, std::string password,
-										 optional_string update_username,
-										 optional_string update_password,
-										 optional_string primary_phone_number,
-										 optional_string primary_email,
-										 optional_string_array phone_numbers,
-										 optional_string_array emails)
+std::string stem::database::update_user(std::string username, std::string password,
+										optional_string update_username,
+										optional_string update_password,
+										optional_string primary_phone_number,
+										optional_string primary_email,
+										optional_string_array phone_numbers,
+										optional_string_array emails)
 {
 
 	// reply message
@@ -245,7 +244,7 @@ std::string ario::database::update_user(std::string username, std::string passwo
  * @param password		: password
  * @return				: delete was successful or not
  */
-std::string ario::database::delete_user(std::string username, std::string password)
+std::string stem::database::delete_user(std::string username, std::string password)
 {
 
 	// reply message
@@ -289,10 +288,10 @@ std::string ario::database::delete_user(std::string username, std::string passwo
  * @return						: key creation was
  * successful or not
  */
-std::string ario::database::create_key(std::string username, std::string password,
-										std::string name, std::string database_name,
-										int valid_requests_number, int valid_read_size,
-										int valid_write_size, std::vector<std::string> access)
+std::string stem::database::create_key(std::string username, std::string password, std::string name,
+									   std::string database_name, int valid_requests_number,
+									   int valid_read_size, int valid_write_size,
+									   std::vector<std::string> access)
 {
 	// reply message
 	std::string reply;
@@ -397,12 +396,11 @@ std::string ario::database::create_key(std::string username, std::string passwor
  * or
  * not
  */
-std::string ario::database::update_key(std::string username, std::string password,
-										std::string name, optional_string update_name,
-										optional_string database_name,
-										optional_int valid_requests_number,
-										optional_int request_per_day, optional_int valid_read_size,
-										optional_int valid_write_size, optional_string_array access)
+std::string stem::database::update_key(std::string username, std::string password, std::string name,
+									   optional_string update_name, optional_string database_name,
+									   optional_int valid_requests_number,
+									   optional_int request_per_day, optional_int valid_read_size,
+									   optional_int valid_write_size, optional_string_array access)
 {
 	// reply message
 	std::string reply;
@@ -512,7 +510,7 @@ std::string ario::database::update_key(std::string username, std::string passwor
  * @param name			: name for finding key
  * @return				: users key
  */
-std::string ario::database::get_user_key(std::string username, std::string name)
+std::string stem::database::get_user_key(std::string username, std::string name)
 {
 	// reply message
 	std::string reply;
@@ -566,7 +564,7 @@ std::string ario::database::get_user_key(std::string username, std::string name)
  * @param password		: password of user
  * @return				: all keys in json
  */
-std::string ario::database::get_user_keys(std::string username, std::string password)
+std::string stem::database::get_user_keys(std::string username, std::string password)
 {
 
 	// reply message
@@ -630,8 +628,8 @@ std::string ario::database::get_user_keys(std::string username, std::string pass
  * @param name				: name of key
  * @return 					: key in json
  */
-std::string ario::database::delete_user_key(std::string username, std::string password,
-											 std::string name)
+std::string stem::database::delete_user_key(std::string username, std::string password,
+											std::string name)
 {
 
 	// reply message
@@ -677,7 +675,7 @@ std::string ario::database::delete_user_key(std::string username, std::string pa
  * @return					: return all keys of user in
  * json
  */
-std::string ario::database::delete_user_keys(std::string username, std::string password)
+std::string stem::database::delete_user_keys(std::string username, std::string password)
 {
 
 	// reply message
@@ -730,11 +728,11 @@ std::string ario::database::delete_user_keys(std::string username, std::string p
  * or
  * not
  */
-std::string ario::database::create_payment(std::string username, std::string password,
-											int main_value, optional_int discount_value,
-											optional_string discount_type, int expiration_time,
-											int request_numbers_per_day, int read_size,
-											int write_size)
+std::string stem::database::create_payment(std::string username, std::string password,
+										   int main_value, optional_int discount_value,
+										   optional_string discount_type, int expiration_time,
+										   int request_numbers_per_day, int read_size,
+										   int write_size)
 {
 
 	// reply message
@@ -805,7 +803,7 @@ std::string ario::database::create_payment(std::string username, std::string pas
  * @param password		: password of user
  * @return				: get all payments in json
  */
-std::string ario::database::get_payments(std::string username, std::string password)
+std::string stem::database::get_payments(std::string username, std::string password)
 {
 
 	// create connection

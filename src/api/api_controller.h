@@ -4,7 +4,7 @@
 #include "database_api_handler.h"
 #include <h2o.h>
 
-namespace ario::api {
+namespace stem::api {
 
 int api_controller(h2o_handler_t *self, h2o_req_t *req);
 }

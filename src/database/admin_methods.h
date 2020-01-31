@@ -28,7 +28,7 @@ typedef boost::optional<std::vector<std::string>> optional_string_array;
 typedef boost::optional<int> optional_int;
 typedef boost::optional<size_t> optional_size;
 
-namespace ario {
+namespace stem {
 namespace database {
 namespace admin {
 // std::string get_user(std::string username);
@@ -43,6 +43,6 @@ bool m_check_key(std::string username, std::string request_key_name, std::string
 				 std::string function_name);
 } // namespace admin
 } // namespace database
-} // namespace ario
+} // namespace stem
 
 #endif // DATABASE_ADMIN_METHODS_H

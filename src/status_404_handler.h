@@ -4,7 +4,7 @@
 ////#include "html_template_engine_handler.h"
 #include "template_file_handler.hpp"
 
-namespace ario {
+namespace stem {
 int status_404_service_handler(h2o_handler_t *self, h2o_req_t *req)
 {
 	static h2o_generator_t generator = {NULL, NULL};
@@ -18,7 +18,7 @@ int status_404_service_handler(h2o_handler_t *self, h2o_req_t *req)
 	data["name"] = "world";
 	data["guests"] = {"Jeff", "Tom", "Patrick", "Patrick1", "Behnam"};
 
-	std::string res_str = ario::template_file_handler("/404", data);
+	std::string res_str = stem::template_file_handler("/404", data);
 	h2o_iovec_t body = h2o_strdup(&req->pool, res_str.c_str(), SIZE_MAX);
 	req->res.status = 404;
 	req->res.reason = "File not found";
@@ -29,6 +29,6 @@ int status_404_service_handler(h2o_handler_t *self, h2o_req_t *req)
 
 	return 0;
 }
-} // namespace ario
+} // namespace stem
 
 #endif // STATUS_404_HANDLER_H

@@ -7,20 +7,22 @@
 #include "reply.h"
 #include "server_library.h"
 
-int ario::api::find_controller(h2o_handler_t *self, h2o_req_t *req)
+int stem::api::find_controller(h2o_handler_t *self, h2o_req_t *req)
 {
 	std::clog << __FUNCTION__ << " " << __LINE__ << std::endl;
 	static h2o_generator_t generator = {NULL, NULL};
 
-	if (!server_library::if_http_method_not_match(req, "POST")) {
+	if (!stem::server_library::if_http_method_not_match(req, "POST")) {
 		return -1;
 	}
 
-	std::string response;
-
 	//FIXME get this from request
-	std::string username;
-	std::string database;
+	auto headers = stem::server_library::get_entities(req);
+
+	std::string username = headers["username"];
+	std::string database = headers["username"];
+
+	std::string response;
 
 	json request; // = json::parse(req->entity.base);
 	try {
@@ -47,7 +49,7 @@ int ario::api::find_controller(h2o_handler_t *self, h2o_req_t *req)
 	}
 
 	try {
-		//		response = ario::database::find();
+		//		response = stem::database::find();
 	} catch (std::exception &e) {
 		//FIXME handle error
 
@@ -55,7 +57,7 @@ int ario::api::find_controller(h2o_handler_t *self, h2o_req_t *req)
 	}
 
 	// call collection method
-	response = ario::database::collection::find(username, database, query, options);
+	response = stem::database::collection::find(username, database, query, options);
 
 	h2o_iovec_t body = h2o_strdup(&req->pool, response.c_str(), SIZE_MAX);
 	req->res.status = 200;

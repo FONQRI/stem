@@ -31,7 +31,7 @@ typedef boost::optional<int> optional_int;
 typedef boost::optional<size_t> optional_size;
 typedef boost::optional<bsoncxx::types::b_array> optional_array;
 
-namespace ario::database::collection {
+namespace stem::database::collection {
 
 // TODO [0] add writeConcern and update comment
 std::string insert_many(std::string username, std::string database_name,
@@ -165,7 +165,6 @@ std::string aggregate(std::string username, std::string database_name, optional_
 					  optional_int majority, optional_int timeout, optional_int nodes,
 					  optional_ducument hint, optional_string hint_str,
 					  optional_array pipeline_array);
-} // namespace ario::database::collection
-} // namespace ario
+} // namespace stem::database::collection
 
 #endif // DATABASE_COLLECTIONS_METHODS_H

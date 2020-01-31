@@ -6,7 +6,7 @@
 #include "template_file_handler.hpp"
 #include <h2o.h>
 
-namespace ario {
+namespace stem {
 int home_service_handler(h2o_handler_t *self, h2o_req_t *req)
 {
 	static h2o_generator_t generator = {NULL, NULL};
@@ -20,7 +20,7 @@ int home_service_handler(h2o_handler_t *self, h2o_req_t *req)
 	data["name"] = "world";
 	data["guests"] = {"Jeff", "Tom", "Patrick", "Patrick1", "Behnam"};
 
-	std::string res_str = ario::template_file_handler(path, data);
+	std::string res_str = stem::template_file_handler(path, data);
 
 	if (res_str == "404") {
 
@@ -47,6 +47,6 @@ int home_service_handler(h2o_handler_t *self, h2o_req_t *req)
 ////	data["guests"] = {"Jeff", "Tom", "Patrick"};
 ////	return data;
 ////}
-}; // namespace ario
+}; // namespace stem
 
 #endif // HOME_SERVICE_HANDLER_H

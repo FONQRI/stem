@@ -26,7 +26,7 @@
  * @param ordered				: bool of ordered
  * @return answer reply
  */
-std::string ario::database::collection::insert_many(
+std::string stem::database::collection::insert_many(
 	std::string username, std::string database_name,
 	std::vector<bsoncxx::document::value> insert_document_array,
 	boost::optional<std::string> acknowledge_level, boost::optional<std::string> tag,
@@ -118,7 +118,7 @@ std::string ario::database::collection::insert_many(
  * @param insert_document	: BSON document to insert
  * @return answer reply
  */
-std::string ario::database::collection::insert_one(
+std::string stem::database::collection::insert_one(
 	std::string username, std::string database_name, bsoncxx::types::b_document insert_document,
 	boost::optional<std::string> acknowledge_level, boost::optional<std::string> tag,
 	boost::optional<bool> journal, boost::optional<int> majority, boost::optional<int> timeout,
@@ -223,7 +223,7 @@ std::string ario::database::collection::insert_one(
  * or this one for errors
  * :"{"isSuccessful":false,"Message":" + what happened + "}"
  */
-std::string ario::database::collection::find(std::string username, std::string database_name,
+std::string stem::database::collection::find(std::string username, std::string database_name,
 											 json query, json options)
 {
 	// create connection
@@ -286,7 +286,7 @@ std::string ario::database::collection::find(std::string username, std::string d
  * or this one for errors
  * :"{"isSuccessful":false,"Message":" + what happened + "}"
  */
-std::string ario::database::collection::find_one(
+std::string stem::database::collection::find_one(
 	std::string username, std::string database_name, bsoncxx::types::b_document query_document,
 	boost::optional<bsoncxx::types::b_document> projection_document,
 	boost::optional<bsoncxx::types::b_document> sort_document,
@@ -381,7 +381,7 @@ std::string ario::database::collection::find_one(
  * :"{"isSuccessful":false,"Message":" + what happened + "}"
  */
 
-std::string ario::database::collection::update_many(
+std::string stem::database::collection::update_many(
 	std::string username, std::string database_name, bsoncxx::types::b_document filter_document,
 	bsoncxx::types::b_document update_document,
 	boost::optional<bsoncxx::types::b_document> collation,
@@ -518,7 +518,7 @@ std::string ario::database::collection::update_many(
  * or this one for errors
  * :"{"isSuccessful":false,"Message":" + what happened + "}"
  */
-std::string ario::database::collection::update_one(
+std::string stem::database::collection::update_one(
 	std::string username, std::string database_name, bsoncxx::types::b_document filter_document,
 	bsoncxx::types::b_document update_document,
 	boost::optional<bsoncxx::types::b_document> collation,
@@ -659,7 +659,7 @@ std::string ario::database::collection::update_one(
  * or this one for errors
  * :"{"isSuccessful":false,"Message":" + what happened + "}"
  */
-std::string ario::database::collection::find_one_and_update(
+std::string stem::database::collection::find_one_and_update(
 	std::string username, std::string database_name, bsoncxx::types::b_document filter_document,
 	bsoncxx::types::b_document update_document,
 	boost::optional<bsoncxx::types::b_document> projection_document,
@@ -803,7 +803,7 @@ std::string ario::database::collection::find_one_and_update(
  * or this one for errors
  * :"{"isSuccessful":false,"Message":" + what happened + "}"
  */
-std::string ario::database::collection::find_one_and_replace(
+std::string stem::database::collection::find_one_and_replace(
 	std::string username, std::string database_name, bsoncxx::types::b_document filter_document,
 	bsoncxx::types::b_document replacement,
 	boost::optional<bsoncxx::types::b_document> projection_document,
@@ -943,7 +943,7 @@ std::string ario::database::collection::find_one_and_replace(
  * :"{"isSuccessful":false,"Message":" + what happened + "}"
  */
 
-std::string ario::database::collection::delete_many(std::string username, std::string database_name,
+std::string stem::database::collection::delete_many(std::string username, std::string database_name,
 													nlohmann::json query,
 													nlohmann::json delete_options)
 {
@@ -1072,7 +1072,7 @@ std::string ario::database::collection::delete_many(std::string username, std::s
  * :"{"isSuccessful":false,"Message":" + what happened + "}"
  */
 
-std::string ario::database::collection::delete_one(
+std::string stem::database::collection::delete_one(
 	std::string username, std::string database_name, bsoncxx::types::b_document query_document,
 	boost::optional<bsoncxx::types::b_document> collation,
 	boost::optional<std::string> acknowledge_level, boost::optional<std::string> tag,
@@ -1196,7 +1196,7 @@ std::string ario::database::collection::delete_one(
  * or this one for errors
  * :"{"isSuccessful":false,"Message":" + what happened + "}"
  */
-std::string ario::database::collection::find_one_and_delete(
+std::string stem::database::collection::find_one_and_delete(
 	std::string username, std::string database_name, bsoncxx::types::b_document query_document,
 	boost::optional<bsoncxx::types::b_document> projection_document,
 	boost::optional<bsoncxx::types::b_document> sort_document,
@@ -1310,7 +1310,7 @@ std::string ario::database::collection::find_one_and_delete(
  * or this one for errors
  * :"{"isSuccessful":false,"Message":" + what happened + "}"
  */
-std::string ario::database::collection::count(std::string username, std::string database_name,
+std::string stem::database::collection::count(std::string username, std::string database_name,
 											  bsoncxx::types::b_document query_document,
 											  boost::optional<size_t> limit_number_of_docs,
 											  boost::optional<size_t> skip_number_of_docs)
@@ -1359,7 +1359,7 @@ std::string ario::database::collection::count(std::string username, std::string 
  * @return				: success or failure message
  */
 
-std::string ario::database::collection::drop(std::string username, std::string database_name)
+std::string stem::database::collection::drop(std::string username, std::string database_name)
 {
 
 	// create connection
@@ -1428,7 +1428,7 @@ std::string ario::database::collection::drop(std::string username, std::string d
  * message
  */
 
-std::string ario::database::collection::create_index(
+std::string stem::database::collection::create_index(
 	std::string username, std::string database_name, bsoncxx::types::b_document index_document,
 	bool options_is_set, boost::optional<bool> background, boost::optional<bool> unique,
 	boost::optional<bool> sparse, boost::optional<std::int32_t> version,
@@ -1600,7 +1600,7 @@ std::string ario::database::collection::create_index(
  * @return				: name of collection in json
  */
 
-std::string ario::database::collection::name(std::string username, std::string database_name)
+std::string stem::database::collection::name(std::string username, std::string database_name)
 {
 	// create connection
 	mongocxx::client connection{mongocxx::uri{}};
@@ -1633,7 +1633,7 @@ std::string ario::database::collection::name(std::string username, std::string d
  * @return 				: an array of indexes of collection
  */
 
-std::string ario::database::collection::list_indexes(std::string username, std::string database_name)
+std::string stem::database::collection::list_indexes(std::string username, std::string database_name)
 {
 	// create connection
 	mongocxx::client connection{mongocxx::uri{}};
@@ -1665,7 +1665,7 @@ std::string ario::database::collection::list_indexes(std::string username, std::
 	}
 }
 
-std::string ario::database::collection::distinct(
+std::string stem::database::collection::distinct(
 	std::string username, std::string database_name, std::string name_string,
 	bsoncxx::types::b_document filter_document,
 	boost::optional<bsoncxx::types::b_document> collation, boost::optional<size_t> max_time)
@@ -1705,7 +1705,7 @@ std::string ario::database::collection::distinct(
 	}
 }
 
-void ario::database::collection::aggregate_oprate(mongocxx::pipeline &pipeline,
+void stem::database::collection::aggregate_oprate(mongocxx::pipeline &pipeline,
 												  bsoncxx::types::b_document doc)
 {
 
@@ -1922,7 +1922,7 @@ void ario::database::collection::aggregate_oprate(mongocxx::pipeline &pipeline,
 	}
 }
 
-std::string ario::database::collection::aggregate(
+std::string stem::database::collection::aggregate(
 	std::string username, std::string database_name, optional_bool allow_disk_use,
 	optional_bool use_cursor, optional_bool bypass_document_validation, optional_size max_time,
 	optional_int batch_size, optional_ducument collation, optional_string acknowledge_level,

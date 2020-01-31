@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(Stem_exe)
+project(stem)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -18,7 +18,7 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++17 -D__STRICT_ANSI__")
 find_package (Threads REQUIRED)
 find_package (inja REQUIRED)
 
-
+#find_package(dragon REQUIRED)
 # adding mongo client library
 find_package(libbsoncxx REQUIRED)
 find_package(libmongocxx REQUIRED)
@@ -40,6 +40,7 @@ endif()
     Boost::filesystem
     Boost::iostreams
     Boost::thread
+    Boost::log
     #    Boost::mpi
     ${CMAKE_THREAD_LIBS_INIT}
     ${Boost_SYSTEM_LIBRARY}
@@ -63,6 +64,9 @@ endif()
     fonqri::database
 
     fonqri::library
+
+    yaml-cpp
+    log4cpp
     )
 message("FONQRI TEST ")
 message(fonqri::database)

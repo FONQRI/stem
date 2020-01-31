@@ -10,9 +10,7 @@
 
 #include <string>
 
-namespace ario {
-namespace core {
-namespace reply {
+namespace stem::core::reply {
 
 std::string error(size_t code, std::string what);
 
@@ -48,7 +46,6 @@ std::string duplicate_index(std::string what);
 
 std::string http_error(std::string what);
 std::string unknown_error();
-} // namespace reply
-} // namespace core
-} // namespace iotdb
+} // namespace stem::core::reply
+
 #endif // core_REPLY_H

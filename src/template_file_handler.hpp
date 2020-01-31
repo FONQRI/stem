@@ -30,14 +30,14 @@
 // Just for convenience
 using namespace inja;
 using json = nlohmann::json;
-namespace ario {
+namespace stem {
 std::string template_file_handler(std::string path, json data = json{})
 {
 	std::clog << __FUNCTION__ << " Path: " << path << std::endl;
 	//std::filesystem::current_path().string()
 	std::string filename;
 	filename += path_libraries::add_slash_at_end(std::filesystem::current_path().string())
-				+ ario_vars::doc_root + path_libraries::add_slash_at_end(path.c_str())
+				+ stem::vars::doc_root + path_libraries::add_slash_at_end(path.c_str())
 				+ "index.html";
 
 	std::clog << filename << std::endl;
@@ -79,6 +79,6 @@ std::string template_file_handler(std::string path, json data = json{})
 
 	//	return 0;
 }
-} // namespace ario
+} // namespace stem
 
 #endif // TEMPLATE_FILE_HANDLER_H

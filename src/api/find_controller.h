@@ -3,11 +3,9 @@
 
 #include <h2o.h>
 
-namespace ario::api
-{
+namespace stem::api {
 
-	int find_controller(h2o_handler_t *self, h2o_req_t *req);
-
+int find_controller(h2o_handler_t *self, h2o_req_t *req);
 }
 
 #endif // FIND_CONTROLLER_H

@@ -1,5 +1,5 @@
-#ifndef ARIO_SERVER_H
-#define ARIO_SERVER_H
+#ifndef stem_SERVER_H
+#define stem_SERVER_H
 /*
  * Copyright (c) 2014 DeNA Co., Ltd.
  *
@@ -79,7 +79,7 @@ static int create_listener(void)
 	int r;
 
 	uv_tcp_init(ctx.loop, &listener);
-	uv_ip4_addr("0.0.0.0", ario_vars::SERVER_PORT, &addr);
+	uv_ip4_addr("0.0.0.0", stem::vars::SERVER_PORT, &addr);
 	if ((r = uv_tcp_bind(&listener, (struct sockaddr *) &addr, 0)) != 0) {
 		fprintf(stderr, "uv_tcp_bind:%s\n", uv_strerror(r));
 		goto Error;
@@ -183,4 +183,4 @@ static h2o_pathconf_t *register_handler(h2o_hostconf_t *hostconf, const char *pa
 	return pathconf;
 }
 
-#endif // ARIO_SERVER_H
+#endif // stem_SERVER_H

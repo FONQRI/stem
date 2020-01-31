@@ -11,6 +11,8 @@ After installing dependencies you can run project and see output in localhost:78
 What things you need to install the software and how to install them
 
 * [CMake](https://cmake.org)
+* [yaml-cpp](https://github.com/jbeder/yaml-cpp)
+* [cpp-jwt](https://github.com/arun11299/cpp-jwt)
 * [Boost](https://www.boost.org)
 * [H2O](https://github.com/h2o/h2o)
 * [Inja](https://github.com/pantor/inja)

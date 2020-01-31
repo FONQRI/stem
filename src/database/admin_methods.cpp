@@ -100,7 +100,7 @@ using bsoncxx::builder::basic::sub_array;
 //	return reply;
 //}
 
-bool ario::database::admin::m_check_key_database(std::string username, std::string key,
+bool stem::database::admin::m_check_key_database(std::string username, std::string key,
 												 std::string &reply, std::string function_name)
 {
 
@@ -189,7 +189,7 @@ bool ario::database::admin::m_check_key_database(std::string username, std::stri
 	return "";
 }
 
-bool ario::database::admin::m_check_key(std::string username, std::string request_key_name,
+bool stem::database::admin::m_check_key(std::string username, std::string request_key_name,
 										std::string &reply, std::string function_name)
 {
 	//	// reply message

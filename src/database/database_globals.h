@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace ario {
+namespace stem {
 namespace database {
 class database_globals : public boost::serialization::singleton<database_globals>
 {
@@ -27,5 +27,5 @@ private:
 
 // std::vector<std::string> m_database_urls_and_ports;
 } // namespace database
-} // namespace iotdb
+} // namespace stem
 #endif // DATABASE_GLOBALS_H
